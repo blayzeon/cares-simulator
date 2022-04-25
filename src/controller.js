@@ -23,9 +23,9 @@ const data = {
             facility: account.facility,
         }
     },
-    create(account) {
+    create(accountNumber) {
         this.all.bna.push({
-            account: account,
+            account: accountNumber,
             name1: "",
             name2: "",
             address1: "",
@@ -42,7 +42,7 @@ const data = {
             au: "",
             lec: "",
             facility: "",
-            comments: [{}],
+            comments: [],
             policies: [
                 {
                     label: "Cell phone/VOIP setup at own risk",
@@ -64,6 +64,19 @@ const data = {
         });
 
         return this.all.bna[this.all.bna.length-1];
+    },
+    set(object, item, value) {
+        object[item] = value;
+        return object;
+    },
+    addComment(object, comment, date='4/25/2022', time='4:40 PM') {
+        object.comments.push({
+            date,
+            time,
+            comment
+        });
+
+        return object.comments[object.comments.length-1];
     }
 }
 

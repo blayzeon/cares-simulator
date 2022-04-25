@@ -24,3 +24,17 @@ test('data.create can create new accounts', ()=> {
         expect.objectContaining({account: '0'}),
     );
 });
+
+test('data.set can change values', ()=> {
+    const account = data.find('8004838314');
+    expect(data.set(account, 'name1', 'bob')).toEqual(
+        expect.objectContaining({name1: 'bob'}),
+    );
+});
+
+test('data.addComment can add comments', ()=> {
+    const account = data.find('8004838314');
+    expect(data.addComment(account, 'hi mom')).toEqual(
+        expect.objectContaining({comment: 'hi mom'}),
+    );
+});
