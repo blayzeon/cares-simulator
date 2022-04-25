@@ -1,7 +1,48 @@
 {
     "bna": [
         {
-            "account": "8004838314"
+            "account": "8004838314",
+            "name1": "GTL",
+            "name2": "IVR Number",
+            "address1": "DO NOT SET UP",
+            "address2": "",
+            "zip": "08083",
+            "city": "DO NOT SET UP",
+            "state": "NJ",
+            "phone1": "8004838314",
+            "phone2": "",
+            "email": "DONOTSETUP@gtl.net",
+            "tax": "",
+            "passcode": "",
+            "notes": "**** GFUNDS ONLY ****",
+            "au": "NONE",
+            "lec": "",
+            "facility": "Hillsborough County FL-Jail",
+            "comments": [
+                {
+                    "date": "4/25/2022",
+                    "time": "1:33:46 PM",
+                    "comment": "CARES User kristine.carter accessed account."
+                }
+            ],
+            "policies": [
+                {
+                    "label": "Cell phone/VOIP setup at own risk",
+                    "status": false
+                },
+                {
+                    "label": "Service Fees",
+                    "status": false
+                },
+                {
+                    "label": "90 Days Account Expiration",
+                    "status": false
+                },
+                {
+                    "label": "180 Days Account Expiration",
+                    "status": false
+                }
+            ]
         }
     ],
     "transactions": {
