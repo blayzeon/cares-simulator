@@ -34,7 +34,11 @@ test('data.set can change values', ()=> {
 
 test('data.addComment can add comments', ()=> {
     const account = data.find('8004838314');
-    expect(data.addComment(account, 'hi mom')).toEqual(
-        expect.objectContaining({comment: 'hi mom'}),
+    expect(data.addComment(account, 'hello world')).toEqual(
+        expect.objectContaining({comment: 'hello world'}),
     );
+});
+
+test('data.filter returns transactions associated with a number', ()=> {
+    expect(data.filter('8004838314')).toBeTruthy();
 });

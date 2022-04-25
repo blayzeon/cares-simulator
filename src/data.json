@@ -45,7 +45,23 @@
             ]
         }
     ],
-    "transactions": {
-
-    }
+    "transactions": [
+        {
+            "refundable": false,
+            "type": "",
+            "addedBy": "ConnectNetwork",
+            "comment": "",
+            "system": "DSI-EMAIL-WEB",
+            "status": "DECLINED",
+            "destination": "8004838314",
+            "cc": "472776********3464",
+            "exp": "0323",
+            "amount": "1.00",
+            "auth": "",
+            "order": "D1265451008",
+            "date": "4/7/2022 3:56:31 PM",
+            "vendor": "PaymenTech",
+            "transaction": "Payment"
+        }
+    ]
 }

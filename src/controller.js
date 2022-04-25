@@ -3,6 +3,7 @@ const jsonData = require('./data.json');
 const data = {
     all: jsonData,
     find(accountNumber) { return this.all.bna.find(numbers => numbers.account === accountNumber) },
+    filter(destination) { return this.all.transactions.filter(number => number.destination === destination) },
     bna(account) {
         return {
             name1: account.name1,
