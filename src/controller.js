@@ -22,6 +22,48 @@ const data = {
             lec: account.lec,
             facility: account.facility,
         }
+    },
+    create(account) {
+        this.all.bna.push({
+            account: account,
+            name1: "",
+            name2: "",
+            address1: "",
+            address2: "",
+            zip: "",
+            city: "",
+            state: "",
+            phone1: "",
+            phone2: "",
+            email: "",
+            tax: "",
+            passcode: "",
+            notes: "",
+            au: "",
+            lec: "",
+            facility: "",
+            comments: [{}],
+            policies: [
+                {
+                    label: "Cell phone/VOIP setup at own risk",
+                    status: false
+                },
+                {
+                    label: "Service Fees",
+                    status: false
+                },
+                {
+                    label: "90 Days Account Expiration",
+                    status: false
+                },
+                {
+                    label: "180 Days Account Expiration",
+                    status: false
+                }
+            ]
+        });
+
+        return this.all.bna[this.all.bna.length-1];
     }
 }
 

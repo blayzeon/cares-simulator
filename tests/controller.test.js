@@ -2,19 +2,25 @@ import {
     data
 } from '../src/controller.js';
 
-test('checks if 8004838314 is an existing account', ()=> {
+test('data.find returns the account if it exists', ()=> {
     expect(data.find('8004838314')).toEqual(
         expect.objectContaining({account: '8004838314'}),
     );
 });
 
-test('checks if 0 is an existing account', ()=> {
+test('data.find returns undefined when account doesnt exist', ()=> {
     expect(data.find('0')).toEqual(undefined);
 });
 
-test('Checks if we can get the BNA of an account', ()=> {
+test('data.bna can get the BNA of an account', ()=> {
     const account = data.find('8004838314');
     expect(data.bna(account)).toEqual(
         expect.objectContaining({name1: 'GTL'}),
+    );
+});
+
+test('data.create can create new accounts', ()=> {
+    expect(data.create('0')).toEqual(
+        expect.objectContaining({account: '0'}),
     );
 });
