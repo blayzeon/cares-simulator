@@ -1,4 +1,9 @@
-/* CARES SIMULATOR */
+/* 
+            CARES SIMULATOR
+
+            
+
+*/
 
 /* Account Summary Page
     This page can do the following:
@@ -12,6 +17,7 @@
         * Friends and Family
         * APOC
     * View/uodate the customer's BNA
+    * Validate if an address is correct
     * View/add comments to the customer's account
     * View/update the customer's policies
     * Add deposits via a CC

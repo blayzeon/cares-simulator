@@ -42,3 +42,15 @@ test('data.addComment can add comments', ()=> {
 test('data.filter returns transactions associated with a number', ()=> {
     expect(data.filter('8004838314')).toBeTruthy();
 });
+
+test('data.addDeposit can add deposits associated with an account', ()=> {
+    expect(data.addDeposit({destination: "0", amount: "0.00"})).toEqual(
+        expect.objectContaining({destination: '0'}),
+    );
+});
+
+test('data.addDeposit will auto populate omitted fields', ()=> {
+    expect(data.addDeposit({destination: "0", amount: "0.00"})).toEqual(
+        expect.objectContaining({type: 'Deposit', fee: '3.00', vender: "PaymenTech"}),
+    );
+});

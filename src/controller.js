@@ -27,6 +27,8 @@ const data = {
     create(accountNumber) {
         this.all.bna.push({
             account: accountNumber,
+            status: "Active",
+            types: ["Advance Pay"],
             name1: "",
             name2: "",
             address1: "",
@@ -78,9 +80,62 @@ const data = {
         });
 
         return object.comments[object.comments.length-1];
+    },
+    addDeposit(depositInfo) {
+        const newDeposit = depositInfo;
+
+        /* auto-fill omitted information */
+        if (!depositInfo.type) { newDeposit.type = "Deposit" };
+
+        if (!depositInfo.addedBy) { newDeposit.addedBy = "InContactMainAdvancePayIVR" };
+
+        if (!depositInfo.comment) { newDeposit.comment = "" };
+
+        if (!depositInfo.system) { newDeposit.system = "ADVANCEPAY-IVR" };
+
+        if (!depositInfo.status) { newDeposit.status = "APPROVED" };
+
+        if (!depositInfo.destination) { newDeposit.destination = "8004838314" };
+
+        if (!depositInfo.cc) { newDeposit.cc = "444444********4444" };
+
+        if (!depositInfo.exp) { newDeposit.exp = "1299" };
+
+        if (!depositInfo.amount) { newDeposit.amount = "5.00" };
+
+        if (!depositInfo.auth1) { newDeposit.auth1 = "00000000000000000000000000000000" };
+
+        if (!depositInfo.auth2) { newDeposit.auth2 = "000000" };
+
+        if (!depositInfo.order) { newDeposit.order = "00000000000" };
+
+        if (!depositInfo.date) {
+            const date = new Date();
+            const formattedDate = date.toLocaleDateString(undefined, {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit"
+            });
+            const formattedTime = date.toLocaleTimeString("en-US");
+            newDeposit.date = `${formattedDate} ${formattedTime}`;
+        };
+        
+        if (!depositInfo.vender) { newDeposit.vender = "PaymenTech" };
+
+        if (!depositInfo.transaction1) { newDeposit.transaction1 = "Payment" };
+
+        if (!depositInfo.transaction2) { newDeposit.transaction2 = "Post-Auth" };
+
+        if (!depositInfo.fee) { newDeposit.fee = "3.00" };
+
+        /* */
+
+        this.all.transactions.push(newDeposit);
+        return this.all.transactions[this.all.transactions.length-1];
     }
 }
 
 export {
     data
 }
+

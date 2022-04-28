@@ -2,6 +2,8 @@
     "bna": [
         {
             "account": "8004838314",
+            "status": "Blocked",
+            "types": ["Advance Pay", "Friends and Family"],
             "name1": "GTL",
             "name2": "IVR Number",
             "address1": "DO NOT SET UP",
@@ -57,11 +59,34 @@
             "cc": "472776********3464",
             "exp": "0323",
             "amount": "1.00",
-            "auth": "",
+            "auth1": "",
+            "auth2": "",
             "order": "D1265451008",
             "date": "4/7/2022 3:56:31 PM",
-            "vendor": "PaymenTech",
-            "transaction": "Payment"
+            "vender": "PaymenTech",
+            "transaction": "Payment",
+            "transaction2": "",
+            "fee": "0.00" 
+        },
+        {
+            "refundable": true,
+            "type": "Deposit",
+            "addedBy": "InContactMainAdvancePayIVR",
+            "comment": "",
+            "system": "ADVANCEPAY-IVR",
+            "status": "APPROVED",
+            "destination": "8004838314",
+            "cc": "474476********1551",
+            "exp": "0826",
+            "amount": "25.00",
+            "auth1": "709002700000HBK20220426100629527",
+            "auth2": "190264",
+            "order": "D1066312614",
+            "date": "4/26/2022 2:06:30 PM",
+            "vender": "PaymenTech",
+            "transaction1": "Payment",
+            "transaction2": "Post-Auth",
+            "fee": "3.00"
         }
     ]
 }
