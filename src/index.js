@@ -25,6 +25,45 @@
     * View the customer's balance
 */
 
+import { data } from "./controller.js"
+
+function createInput (type, label) {
+    const body = document.querySelector('body');
+    const container = document.createElement('div');
+    const elm = document.createElement("input");
+    elm.setAttribute('type', type);
+
+    if (type !== "button"){
+        const l = document.createElement('label');
+        l.innerText = label;
+        container.appendChild(l)
+    } else {
+        elm.value = label;
+    }
+
+    container.appendChild(elm);
+
+    body.appendChild(container)
+
+    return elm;
+}
+
+const lookupInput = createInput('text', "phone number: ");
+lookupInput.value = "8004838314";
+const as = createInput('button', 'bna');
+const data2 = data;
+const cat = data2.addDeposit({amount: "999.99", destination: "8004838314"});
+as.addEventListener('click', ()=> {
+    const value = lookupInput.value;
+    const filtered = data2.filter(value);
+    const refundable = data2.returnRefundable(value);
+
+    console.log(filtered)
+    console.log(refundable)
+
+});
+
+
 /* Transactions Page
     This page can do the following:
     * Show transactions associated with an account within a searchable date range

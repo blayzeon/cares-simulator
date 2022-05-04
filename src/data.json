@@ -1,7 +1,7 @@
 {
     "bna": [
         {
-            "account": "8004838314",
+            "destination": "8004838314",
             "status": "Blocked",
             "types": ["Advance Pay", "Friends and Family"],
             "name1": "GTL",
@@ -24,7 +24,7 @@
                 {
                     "date": "4/25/2022",
                     "time": "1:33:46 PM",
-                    "comment": "CARES User kristine.carter accessed account."
+                    "comment": "CARES User kristine.carter accessed destination."
                 }
             ],
             "policies": [
@@ -37,11 +37,11 @@
                     "status": false
                 },
                 {
-                    "label": "90 Days Account Expiration",
+                    "label": "90 Days destination Expiration",
                     "status": false
                 },
                 {
-                    "label": "180 Days Account Expiration",
+                    "label": "180 Days destination Expiration",
                     "status": false
                 }
             ]
@@ -50,7 +50,7 @@
     "transactions": [
         {
             "refundable": false,
-            "type": "",
+            "type": false,
             "addedBy": "ConnectNetwork",
             "comment": "",
             "system": "DSI-EMAIL-WEB",

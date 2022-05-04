@@ -2,8 +2,22 @@ const jsonData = require('./data.json');
 
 const data = {
     all: jsonData,
-    find(accountNumber) { return this.all.bna.find(numbers => numbers.account === accountNumber) },
-    filter(destination) { return this.all.transactions.filter(number => number.destination === destination) },
+    returnCurrentDateTime() {
+        const date = new Date();
+        const formattedDate = date.toLocaleDateString(undefined, {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit"
+        });
+        const formattedTime = date.toLocaleTimeString("en-US");
+        
+        return {
+            date: formattedDate,
+            time: formattedTime
+        }
+    },
+    find(accountNumber) { return this.all.bna.find(numbers => numbers.destination === accountNumber) },
+    filter(destination) { return this.all.transactions.filter(transaction => transaction.destination === destination) },
     bna(account) {
         return {
             name1: account.name1,
@@ -26,7 +40,7 @@ const data = {
     },
     create(accountNumber) {
         this.all.bna.push({
-            account: accountNumber,
+            destination: accountNumber,
             status: "Active",
             types: ["Advance Pay"],
             name1: "",
@@ -81,57 +95,208 @@ const data = {
 
         return object.comments[object.comments.length-1];
     },
-    addDeposit(depositInfo) {
+    addDeposit(depositInfo={}) {
         const newDeposit = depositInfo;
 
         /* auto-fill omitted information */
         if (!depositInfo.type) { newDeposit.type = "Deposit" };
 
-        if (!depositInfo.addedBy) { newDeposit.addedBy = "InContactMainAdvancePayIVR" };
+        if (depositInfo.type === "Deposit") {
+            newDeposit.refundable = true;
 
-        if (!depositInfo.comment) { newDeposit.comment = "" };
+            if (!depositInfo.addedBy) { newDeposit.addedBy = "InContactMainAdvancePayIVR" };
 
-        if (!depositInfo.system) { newDeposit.system = "ADVANCEPAY-IVR" };
+            if (!depositInfo.system) { newDeposit.system = "ADVANCEPAY-IVR" };
 
-        if (!depositInfo.status) { newDeposit.status = "APPROVED" };
+            if (!depositInfo.status) { newDeposit.status = "APPROVED" };
+
+            if (!depositInfo.cc) { newDeposit.cc = "444444********4444" };
+
+            if (!depositInfo.exp) { newDeposit.exp = "1299" };
+
+            if (!depositInfo.auth1) { newDeposit.auth1 = "00000000000000000000000000000000" };
+
+            if (!depositInfo.auth2) { newDeposit.auth2 = "000000" };
+
+            if (!depositInfo.order) { newDeposit.order = "00000000000" };
+
+            if (!depositInfo.vender) { newDeposit.vender = "PaymenTech" };
+
+            if (!depositInfo.transaction1) { newDeposit.transaction1 = "Payment" };
+
+            if (!depositInfo.transaction2) { newDeposit.transaction2 = "Post-Auth" };
+
+            if (!depositInfo.fee) { newDeposit.fee = "3.00" };
+
+        }
 
         if (!depositInfo.destination) { newDeposit.destination = "8004838314" };
-
-        if (!depositInfo.cc) { newDeposit.cc = "444444********4444" };
-
-        if (!depositInfo.exp) { newDeposit.exp = "1299" };
-
         if (!depositInfo.amount) { newDeposit.amount = "5.00" };
-
-        if (!depositInfo.auth1) { newDeposit.auth1 = "00000000000000000000000000000000" };
-
-        if (!depositInfo.auth2) { newDeposit.auth2 = "000000" };
-
-        if (!depositInfo.order) { newDeposit.order = "00000000000" };
+        if (!depositInfo.comment) { newDeposit.comment = "" };
 
         if (!depositInfo.date) {
-            const date = new Date();
-            const formattedDate = date.toLocaleDateString(undefined, {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit"
-            });
-            const formattedTime = date.toLocaleTimeString("en-US");
-            newDeposit.date = `${formattedDate} ${formattedTime}`;
+            const date = this.returnCurrentDateTime();
+            newDeposit.date = `${date.date} ${date.time}`;   
         };
-        
-        if (!depositInfo.vender) { newDeposit.vender = "PaymenTech" };
-
-        if (!depositInfo.transaction1) { newDeposit.transaction1 = "Payment" };
-
-        if (!depositInfo.transaction2) { newDeposit.transaction2 = "Post-Auth" };
-
-        if (!depositInfo.fee) { newDeposit.fee = "3.00" };
-
-        /* */
 
         this.all.transactions.push(newDeposit);
         return this.all.transactions[this.all.transactions.length-1];
+    },
+    returnTransactions(destination) {
+        const trans = data.filter(destination);
+        const deposits = [];
+        let balance = 0.00;
+        trans.forEach((tran) => {
+            if (tran.type) {
+                if (tran.type === 'Deposit' || tran.type === "AdjustmentIncrease") {
+                    balance += parseFloat(tran.amount);
+                    deposits.unshift(
+                        {
+                            "Date": tran.date,
+                            "Type": tran.type,
+                            "Added By": tran.addedBy,
+                            "Amount": `$${tran.amount}`,
+                            "Balance": `$${balance.toFixed(2)}`,
+                            "Comment": tran.comment 
+                        }
+                    );
+
+                    if (tran.fee){
+                        const fee2 = (tran.amount * 0.0325).toFixed(2);
+                        balance -= parseFloat(fee2);
+                        deposits.unshift(
+                            {
+                                "Date": tran.date,
+                                "Type": "3rdPartyFinancialTransactionFee",
+                                "Added By": tran.addedBy,
+                                "Amount": `$${fee2}`,
+                                "Balance": `$${balance.toFixed(2)}`,
+                                "Comment": ""
+                            }
+                        );
+        
+                        balance -= parseFloat(tran.fee);
+                        deposits.unshift(
+                            {
+                                "Date": tran.date,
+                                "Type": "DepositTransactionFee",
+                                "Added By": tran.addedBy,
+                                "Amount": `$${tran.fee}`,
+                                "Balance": `$${balance.toFixed(2)}`,
+                                "Comment": ""
+                            }
+                        );
+                    }
+                } else {
+                    balance -= parseFloat(tran.amount);
+                    deposits.unshift(
+                        {
+                            "Date": tran.date,
+                            "Type": tran.type,
+                            "Added By": tran.addedBy,
+                            "Amount": `$${tran.amount}`,
+                            "Balance": `$${balance.toFixed(2)}`,
+                            "Comment": tran.comment 
+                        }
+                    );
+                }
+            }
+        });
+    
+        return { deposits, balance: balance.toFixed(2) };
+    },
+    returnRefundable(destination) {
+        function returnRefundObj(transaction) {
+            const refundObj = {
+                destination: transaction.destination,
+                type: 'AdjustmentDecrease',
+                amount: transaction.amount,
+                addedBy: "CARES",
+                cc: transaction.cc,
+                exp: transaction.exp,
+                system: "CARES",
+                comment: "Adjustment Decrease for Refund Request",
+                refundable: false
+            }
+            return {obj: refundObj, transaction};
+        }
+
+        const trans = data.filter(destination);
+        
+        const transArray = []
+        for (let i = 0; i < trans.length; i += 1) {
+            console.log(trans[i])
+            if (trans[i].refundable) {
+                const toPush = {
+                    menu1: {
+                        date: 'undefined',
+                        addedBy: 'undefined',
+                        amount: 'undefined',
+                        cc: 'undefined',
+                        comment: 'undefined',
+                        exp: 'undefined'
+                    },
+                    menu2: {
+                        // request date
+                        // rep's name
+                        // customer account
+                        // customer's name
+                        merchantId: "284973",
+                        cc: 'undefined',
+                        exp: 'undefined',
+                        date: 'undefined',
+                        amount: 'undefined',
+                        // reason for refund
+                        // refund amount
+                        //email receipt
+                        // email address
+                        // comment         
+                    },
+                    refundInfo: undefined
+                };
+
+                for (let key in trans[i]) {
+                    if (toPush.menu1[key]){
+                        toPush.menu1[key] = trans[i][key];
+                    }
+    
+                    if (toPush.menu2[key]){
+                        toPush.menu2[key] = trans[i][key];
+                    }
+                    toPush.refundInfo = returnRefundObj(trans[i]);
+                }
+
+                transArray.push(toPush);
+            }
+        } 
+    
+        return transArray;
+    },
+    refundTransaction(refundObj, transaction) {
+        transaction.refundable = false;
+        const refunded = this.addDeposit(refundObj);
+
+        return refunded;
+    },
+    transfer(fromAccount, toAccount, amount, comment="") {
+        const remove = {
+            type: "AdjustmentDecrease",
+            destination: fromAccount,
+            amount,
+            comment
+        }
+
+        const add = {
+            type: "AdjustmentIncrease",
+            destination: toAccount,
+            amount,
+            comment
+        }
+
+        this.addDeposit(remove);
+        this.addDeposit(add);
+
+        return { remove, add };
     }
 }
 

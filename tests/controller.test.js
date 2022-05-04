@@ -4,7 +4,7 @@ import {
 
 test('data.find returns the account if it exists', ()=> {
     expect(data.find('8004838314')).toEqual(
-        expect.objectContaining({account: '8004838314'}),
+        expect.objectContaining({destination: '8004838314'}),
     );
 });
 
@@ -21,7 +21,7 @@ test('data.bna can get the BNA of an account', ()=> {
 
 test('data.create can create new accounts', ()=> {
     expect(data.create('0')).toEqual(
-        expect.objectContaining({account: '0'}),
+        expect.objectContaining({destination: '0'}),
     );
 });
 
@@ -54,3 +54,70 @@ test('data.addDeposit will auto populate omitted fields', ()=> {
         expect.objectContaining({type: 'Deposit', fee: '3.00', vender: "PaymenTech"}),
     );
 });
+
+test('data.returnTransactions can return the balance on an account', ()=> {
+    const transactions = data.returnTransactions('8004838314');
+    expect(transactions.balance).toEqual('21.19');
+});
+
+test('data.returnTransactions returns the same thing no matter how many times it is ran', ()=> {
+    const transactions = data.returnTransactions('8004838314');
+    data.returnTransactions('8004838314');
+    data.returnTransactions('8004838314');
+    expect(transactions.balance).toEqual('21.19');
+});
+
+test('data.transfer will transfer funds from one account to another', ()=> {
+    data.transfer('8004838314', '8889884768', '21.19');
+    const transactionsFrom = data.returnTransactions('8004838314');
+    const transactionsTo = data.returnTransactions('8889884768');
+
+    const balances = {
+        from: transactionsFrom.balance,
+        to: transactionsTo.balance
+    }
+    expect(balances).toEqual(
+        expect.objectContaining({from: '0.00', to: '21.19'}),
+    );
+});
+
+test('data.addDeposit will be added to new data.filter results', ()=> {
+    const oldL = data.filter('0').length;
+    data.addDeposit({amount: "999.00", destination: "0"});
+    const newL = data.filter('0').length;
+
+    let result = false;
+    if (newL > oldL) { result = true };
+    expect(result).toEqual(true);
+});
+
+test('data.returnRefundable will return information about refundable deposits', ()=> {
+    data.addDeposit({destination: "1", amount: "999.99"});
+    const refundable = data.returnRefundable("1");
+    expect(refundable[0].refundInfo.obj).toEqual(
+        expect.objectContaining({amount: "999.99"}),
+    );
+});
+
+test('data.returnRefundable will allow transactions to create refundObjs', ()=> {
+    data.addDeposit({destination: "1", amount: "999.99"});
+    const refundable = data.returnRefundable("1");
+    const refundMe = refundable[0].refundInfo;
+    const refunded = data.refundTransaction(refundMe.obj, refundMe.transaction)
+    expect(refunded).toEqual(
+        expect.objectContaining({type: "AdjustmentDecrease"}),
+    );
+});
+
+
+
+// process refund
+
+// show transaction summary
+
+// show cc auths (destination)
+
+// show cc auths (first 6/last 4)
+
+// call records
+
