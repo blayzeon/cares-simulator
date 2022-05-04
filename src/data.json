@@ -88,5 +88,95 @@
             "transaction2": "Post-Auth",
             "fee": "3.00"
         }
+    ],
+    "facilities": [
+        {
+            "Full Name": "Miami-Dade-TGK Correctional Center",
+            "Site ID": "6332",
+            "Cost Center": "5678",
+            "Inmate System": "Focus Premise-based HMP",
+            "Phone System": "GTL",
+            "Orig": "7865773011",
+            "Sub ID": "LH04",
+            "Rate": "0.05",
+            "Fee": "3.00",
+            "INIT DUR": "60",
+            "ADD'L DUR": "60",
+            "Inmate": {
+                "PIN": "2220131799",
+                "First Name": "Unable to find inmate details for pin 2220131799 ."
+            }
+        },
+        {
+            "Full Name": "OH_DRC-Noble Correctioonal (NCI)",
+            "Site ID": "7125",
+            "Cost Center": "OH23",
+            "Inmate System": "ICMv",
+            "Phone System": "GTL",
+            "Orig": "7403050121",
+            "Sub ID": "OH55",
+            "Rate": "0.02",
+            "Fee": "0.00",
+            "INIT DUR": "60",
+            "ADD'L DUR": "60",
+            "Inmate": {
+                "PIN": "2754756",
+                "First Name": "MARK",
+                "Last Name": "LEVERT"
+            }
+        },
+        {
+            "Full Name": "Rappahannock VA-Regional Jail",
+            "Site ID": "3128",
+            "Cost Center": "8643",
+            "Inmate System": "ICMv",
+            "Phone System": "PCS",
+            "Orig": "5406590037",
+            "Sub ID": "6R01",
+            "Rate": "0.24",
+            "Fee": "3.00",
+            "INIT DUR": "60",
+            "ADD'L DUR": "60",
+            "Inmate": {
+                "PIN": "20123537",
+                "First Name": "DEREK",
+                "Last Name": "TOLES"
+            }
+        },
+        {
+            "Full Name": "CA_DOC-Cal State Prison/Solano",
+            "Site ID": "5733",
+            "Cost Center": "CA10",
+            "Inmate System": "Focus Centralized HMP",
+            "Phone System": "GTL",
+            "Orig": "7074540051",
+            "Sub ID": "CA10",
+            "Rate": "0.025",
+            "Fee": "0.00",
+            "INIT DUR": "60",
+            "ADD'L DUR": "60",
+            "Inmate": {
+                "PIN": "BA6326",
+                "First Name": "Unable to find inmate details for pin 2220131799 ."
+            }
+        },
+        {
+            "Full Name": "Essex County NJ-Correctional Facility",
+            "Site ID": "8100",
+            "Cost Center": "8059",
+            "Inmate System": "Focus Premise-based HMP",
+            "Phone System": "DSI-ITI",
+            "Orig": "8622941337",
+            "Sub ID": "HY10",
+            "Rate": "0.01271",
+            "INIT DUR": "15",
+            "ADD'L DUR": "15",
+            "Fee": "0.00",
+            "Inmate": {
+                "PIN": "20021-003556",
+                "First Name": "Unable to find inmate details for pin 2021-003556 ."
+            }
+        }
+
     ]
 }
