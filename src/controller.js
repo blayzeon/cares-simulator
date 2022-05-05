@@ -351,6 +351,52 @@ const data = {
     
         return transArray;
     },
+    returnCcAuths(searchValue, searchType="destination") {
+        const trans = this.all.transactions.filter(transaction => transaction[searchType] === searchValue);
+        
+
+        const rDestination = [];
+        const rCc = [];
+        trans.forEach((tran) => {
+            // Calling System > Status > Destination > CC Number > Exp > Amount > Auth Code > Order ID > Add Date > Vendor > Transaction Type
+            rCc.push(
+                [
+                    tran.system,
+                    tran.status,
+                    tran.destination,
+                    tran.cc,
+                    tran.exp,
+                    tran.amount,
+                    tran.auth,
+                    tran.order,
+                    tran.date,
+                    tran.vendor,
+                    tran.transaction,
+                ]
+            );
+
+            rDestination.push(
+                [
+                    tran.system,
+                    tran.date,
+                    tran.cc,
+                    tran.status,
+                    tran.amount,
+                    tran.auth,
+                    tran.order,
+                    tran.reject,
+                    tran.vendor,
+                    tran.transaction,
+                ]
+            );
+        });
+
+        if (searchType === "destination") {
+            return rDestination;
+        } else {
+            return rCc;
+        }
+    },
     refundTransaction(refundObj, transaction) {
         transaction.refundable = false;
         const refunded = this.addDeposit(refundObj);

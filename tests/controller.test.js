@@ -133,6 +133,13 @@ test('data.sortFilter returns the info needed for transaction summary', ()=> {
     );
 });
 
+test('data.returnCcAuths can search transactions by cc number', ()=> {
+    const result = data.returnCcAuths('472776********3464', 'cc');
+    expect(result[0][3]).toEqual("472776********3464");
+});
+
+
+
 
 // show transaction summary
 
