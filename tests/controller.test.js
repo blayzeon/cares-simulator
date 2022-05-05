@@ -109,9 +109,30 @@ test('data.returnRefundable will allow transactions to create refundObjs', ()=> 
     );
 });
 
+test('data.createCall will generate info needed for call records', ()=> {
+    const call = data.createCall('8004838314');
+    const callObj = call.call;
+    expect(callObj).toEqual(
+        expect.objectContaining({"Call Type": "H"}),
+    );
+});
 
+test('data.createCall will generate calls for transactions', ()=> {
+    const oldBalance = data.returnTransactions('8004838314').balance;
+    data.createCall('8004838314', 15, 0, 0); // "Rate": "0.05" - total $0.75
+    const newBalance = data.returnTransactions('8004838314').balance;
 
-// process refund
+    const result = oldBalance > newBalance ? true : false;
+    expect(result).toEqual(true);
+});
+
+test('data.sortFilter returns the info needed for transaction summary', ()=> {
+    const summary = data.sortFilter('8004838314');
+    expect(summary.Deposit).toEqual(
+        expect.objectContaining({amount: "25.00", count: 1}),
+    );
+});
+
 
 // show transaction summary
 

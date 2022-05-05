@@ -16,8 +16,77 @@ const data = {
             time: formattedTime
         }
     },
+    getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+    },
     find(accountNumber) { return this.all.bna.find(numbers => numbers.destination === accountNumber) },
     filter(destination) { return this.all.transactions.filter(transaction => transaction.destination === destination) },
+    sortFilter(destination) {
+        const data = this.filter(destination);
+
+        const result = {
+            Deposit: {
+                amount: 0,
+                count: 0
+            },
+            "Call Usage": {
+                amount: 0,
+                count: 0
+            },
+            Taxes: {
+                amount: 0,
+                count: 0
+            },
+            Fees: {
+                amount: 0,
+                count: 0
+            },
+            "Funds Xfer": {
+                amount: 0,
+                count: 0
+            },
+            "Adj Increase": {
+                amount: 0,
+                count: 0
+            },
+            "Adj Decrease": {
+                amount: 0,
+                count: 0
+            },
+            Withdrawal: {
+                amount: 0,
+                count: 0
+            },
+            "Ret Check": {
+                amount: 0,
+                count: 0
+            },
+            "Close Acct": {
+                amount: 0,
+                count: 0
+            },
+            "Exp Funds": {
+                amount: 0,
+                count: 0
+            },
+            Chareback: {
+                amount: 0,
+                count: 0
+            }
+        }
+
+        data.forEach((trans) => {
+            for (let key in result) {
+                if (key === trans.pa) {
+                    const newAmount = result[key].amount += parseFloat(trans.amount);
+                    result[key].amount = parseFloat(newAmount).toFixed(2);
+                    result[key].count += 1;
+                }
+            }
+        });
+
+        return result;
+    },
     bna(account) {
         return {
             name1: account.name1,
@@ -128,6 +197,14 @@ const data = {
 
             if (!depositInfo.fee) { newDeposit.fee = "3.00" };
 
+            depositInfo.pa = "Deposit";
+
+        }
+
+        if (depositInfo.type === "CallUsage") {
+            newDeposit.refundable = false;
+            newDeposit.addedBy = "HOUVAL11";
+            newDeposit.pa = "Call Usage"
         }
 
         if (!depositInfo.destination) { newDeposit.destination = "8004838314" };
@@ -171,7 +248,8 @@ const data = {
                                 "Added By": tran.addedBy,
                                 "Amount": `$${fee2}`,
                                 "Balance": `$${balance.toFixed(2)}`,
-                                "Comment": ""
+                                "Comment": "",
+                                "pa": "Fees"
                             }
                         );
         
@@ -183,7 +261,8 @@ const data = {
                                 "Added By": tran.addedBy,
                                 "Amount": `$${tran.fee}`,
                                 "Balance": `$${balance.toFixed(2)}`,
-                                "Comment": ""
+                                "Comment": "",
+                                "pa": "Fees"
                             }
                         );
                     }
@@ -283,20 +362,59 @@ const data = {
             type: "AdjustmentDecrease",
             destination: fromAccount,
             amount,
-            comment
+            comment,
+            pa: "Funds Xfer"
         }
 
         const add = {
             type: "AdjustmentIncrease",
             destination: toAccount,
             amount,
-            comment
+            comment,
+            pa: "Funds Xfer"
         }
 
         this.addDeposit(remove);
         this.addDeposit(add);
 
         return { remove, add };
+    }, 
+    createCall(destination, duration=this.getRandomInt(16), tax=0, facilityIndex=this.all.facilities[this.getRandomInt(this.all.facilities.length-1)]) {
+        const fac = facilityIndex;
+        const seconds = duration === 15 ? 0 : this.getRandomInt(60);
+        const billDur = seconds > 30 ? duration + 1 : duration;
+        const bill = fac.rate * billDur;
+        const sCode = duration > 0 ? "D0" : "D5";
+
+        let tempEndCode = false;
+        if (sCode === "D0") {
+            tempEndCode = duration === 15 ? "TO" : "HU";
+        }
+
+        const eCode = tempEndCode ? tempEndCode : "";
+
+        const call = {
+            "Sub ID": fac['Sub ID'],
+            Orig: fac.Orig,
+            PIN: fac.PIN,
+            duration: `${duration}m ${seconds}s`,
+            "Bill Amt": bill,
+            Tax: tax,
+            "Total Amt": bill + tax,
+            "Start Code": sCode,
+            "End Code": eCode,
+            "Call Type": "H",
+            "Rate Type": this.getRandomInt(6) + 1
+        }
+
+        const callTransaction = {destination, type: "CallUsage", amount: call["Total Amt"]};
+        const transaction = this.addDeposit(callTransaction);
+
+        return {
+            transaction,
+            call,
+            fac
+        }
     }
 }
 
