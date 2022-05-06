@@ -1,0 +1,116 @@
+html, body {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+}
+
+#container {
+    display: flex;
+    gap: 1rem;
+}
+
+#left-content {
+    width: 115px;
+}
+
+#left-content > img {
+    width: 100%;
+}
+
+#left-content > div {
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+#left-content > div > input {
+    width: 90%;
+    margin-top: 5px;
+}
+
+#left-content > div > button {
+    width: 95%;
+}
+
+.nav {
+    all: unset;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    text-align: center;
+}
+
+.nav > li > a {
+    color: blue;
+}
+
+.navy-header {
+    font-family: "Times New Roman";
+    font-size: medium;
+    background-color: #1D355D;
+    color: white;
+    text-align: center;
+    font-weight: normal;
+    margin-bottom: 0.5rem;
+}
+
+#center-content {
+    width: 100%;
+}
+
+ul.navy-header {
+    width: max(1200px, 100%);
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    list-style-type: "►";
+    margin-top: 0;
+    margin-left: 0;
+    padding-left: 1.5rem;
+    color: black;
+}
+
+.navy-header > li > a {
+    color: white;
+    text-decoration: none;  
+}
+
+.space-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.blue-color{
+    color: blue;
+}
+
+main {
+    width: 1100px;
+    border: 1px solid black;
+    min-height: 795px;
+}
+
+.nav > li > button {
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.blue-bg {
+    background-color: #72A3D5;
+}
+
+#container-generated {
+    width: 100%;
+    min-height: 795px;
+}

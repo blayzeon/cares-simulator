@@ -5,9 +5,72 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+    <div id="container">
+        <section id="left-content">
+            <img src="./img/simulator-logo.png" alt="simulator logo">
+            <div>
+                <label for="destination-input">Phone Number:</label>
+                <input type="text" id="destination-input">
+                <button type="button" id="destination-button">Lookup</button>
+            </div>
+            <ul class="nav">
+                <li>
+                    <a href="http://" target="_blank" rel="noopener noreferrer">Advanced Search</a>
+                </li>
+                <li>
+                    <a href="http://" target="_blank" rel="noopener noreferrer">LEC Credit</a>
+                </li>
+            </ul>
+            <h3 class="navy-header">Links</h3>
+            <nav>
+                <ul class="nav">
+                    <li><a href="http://" target="_blank" rel="noopener noreferrer">Master Facility List</a></li>
+                    <li><a href="http://" target="_blank" rel="noopener noreferrer">Refund Form</a></li>
+                    <li><a href="http://" target="_blank" rel="noopener noreferrer">Research Page</a></li>
+                    <li><a href="http://" target="_blank" rel="noopener noreferrer">Connect Network</a></li>
+                    <li><a href="http://" target="_blank" rel="noopener noreferrer">CN Site Info</a></li>
+                    <li><a href="http://" target="_blank" rel="noopener noreferrer">Facility Services</a></li>
+                    <li><a href="http://" target="_blank" rel="noopener noreferrer">CC Deposit</a></li>
+                    <li><a href="http://" target="_blank" rel="noopener noreferrer">Create Account</a></li>
+                </ul>
+            </nav>
+        </section>
+        <section id="center-content">
+            <nav>
+                <ul class="navy-header">
+                    <li><a href="http://" target="_blank" rel="noopener noreferrer">Home</a></li>
+                    <li><a href="http://" target="_blank" rel="noopener noreferrer">Billing</a></li>
+                    <li><a href="http://" target="_blank" rel="noopener noreferrer">Enterprise Tools</a></li>
+                    <li><a href="http://" target="_blank" rel="noopener noreferrer">Technical Support</a></li>
+                    <li><a href="http://" target="_blank" rel="noopener noreferrer">Technology Group</a></li>
+                    <li><a href="http://" target="_blank" rel="noopener noreferrer">External Links</a></li>
+                    <li><a href="http://" target="_blank" rel="noopener noreferrer">Site Configuration</a></li>
+                </ul>
+                <div class="space-between">
+                    <p>Current Path: <span class="underline">Home</span> > <span class="underline">Billing</span> > CARES</p>
+                    <p>Connecting to: <span class="blue-color">SIMULATOR01</span></p>
+                </div>
+            </nav>
+            <main>
+                <ul class="nav row blue-bg">
+                    <li><button class="nav-button">Account Summary</button></li>
+                    <li><button class="nav-button">Transactions</button></li>
+                    <li><button class="nav-button">Refund</button></li>
+                    <li><button class="nav-button">Transaction Summary</button></li>
+                    <li><button class="nav-button">CC Auths</button></li>
+                    <li><button class="nav-button">Call Records</button></li>
+                    <li><button class="nav-button">TAG Comments</button></li>
+                    <li><button class="nav-button">Statements</button></li>
+                    <li><button class="nav-button">Auto Reload</button></li>
+                    <li><button class="nav-button">Alerts</button></li>
+                </ul>
+                <div id="container-generated"></div>
+            </main>
+        </section>
+    </div>
     <script src="main.js"></script>
 </body>
 </html>

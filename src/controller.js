@@ -225,7 +225,7 @@ const data = {
         let balance = 0.00;
         trans.forEach((tran) => {
             if (tran.type) {
-                if (tran.type === 'Deposit' || tran.type === "AdjustmentIncrease") {
+                if (tran.pa === 'Deposit' || tran.type === 'AdjustmentIncrease') {
                     balance += parseFloat(tran.amount);
                     deposits.unshift(
                         {
@@ -455,7 +455,11 @@ const data = {
 
         const eCode = tempEndCode ? tempEndCode : "";
 
+        const callTransaction = {destination, type: "CallUsage", amount: bill.toFixed(2)};
+        const transaction = this.addDeposit(callTransaction);
+
         const call = {
+            date: transaction.date,
             sub: fac['Sub ID'],
             orig: fac.Orig,
             pin: fac.Inmate.PIN,
@@ -468,9 +472,6 @@ const data = {
             type: "H",
             rate: this.getRandomInt(6) + 1
         }
-
-        const callTransaction = {destination, type: "CallUsage", amount: call["Total Amt"]};
-        const transaction = this.addDeposit(callTransaction);
 
         return {
             transaction,

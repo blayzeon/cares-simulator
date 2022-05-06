@@ -118,11 +118,12 @@ test('data.createCall will generate info needed for call records', ()=> {
 });
 
 test('data.createCall will generate calls for transactions', ()=> {
-    const oldBalance = data.returnTransactions('8004838314').balance;
+    const oldBalance = parseFloat(data.returnTransactions('8004838314').balance);
     data.createCall('8004838314', 15, 0, 0); // "Rate": "0.05" - total $0.75
-    const newBalance = data.returnTransactions('8004838314').balance;
+    const newBalance = parseFloat(data.returnTransactions('8004838314').balance);
 
     const result = oldBalance > newBalance ? true : false;
+
     expect(result).toEqual(true);
 });
 
