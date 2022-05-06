@@ -5,6 +5,8 @@
 
 */
 
+import { data } from "./controller.js"
+
 /* Account Summary Page
     This page can do the following:
     * Popup that lets you select the account type if there are multiple types
@@ -25,8 +27,18 @@
     * View the customer's balance
 */
 
-import { data } from "./controller.js"
+// listeners so that the color changes to reflect which nav button is active
+const navBtns = document.querySelectorAll('.nav-button');
+navBtns.forEach((btn) => {
+    btn.addEventListener('click', ()=> {
+        navBtns.forEach((otherBtn) => {
+            otherBtn.classList.remove('active');
+        });
 
+        btn.classList.add('active');
+        console.log('clicked');
+    });
+});
 
 /* Transactions Page
     This page can do the following:
