@@ -120,3 +120,11 @@ main {
 button.active {
     background-color: #A3C0CF !important;
 }
+
+div[data-nav] {
+    display: none;
+}
+
+div[data-nav].active {
+    display: block;
+}

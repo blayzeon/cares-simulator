@@ -29,14 +29,21 @@ import { data } from "./controller.js"
 
 // listeners so that the color changes to reflect which nav button is active
 const navBtns = document.querySelectorAll('.nav-button');
+const navItems = document.querySelectorAll('[data-nav]');
 navBtns.forEach((btn) => {
     btn.addEventListener('click', ()=> {
-        navBtns.forEach((otherBtn) => {
-            otherBtn.classList.remove('active');
-        });
+        if (!btn.classList.contains('active')) {
+            // de-activate the others
+            navItems.forEach((nav) => {
+                nav.classList.remove('active');
+            });
 
-        btn.classList.add('active');
-        console.log('clicked');
+            // activate the clicked button and it's associated page
+            btn.classList.add('active');
+            const navValue = btn.getAttribute('data-nav');
+            const navPage = document.querySelector(`div[data-nav='${navValue}']`);
+            navPage.classList.add('active');
+        }
     });
 });
 

@@ -56,17 +56,27 @@
             </nav>
             <main>
                 <ul class="nav row blue-bg">
-                    <li><button class="nav-button">Account Summary</button></li>
-                    <li><button class="nav-button">Transactions</button></li>
-                    <li><button class="nav-button">Refund</button></li>
-                    <li><button class="nav-button">Transaction Summary</button></li>
-                    <li><button class="nav-button">CC Auths</button></li>
-                    <li><button class="nav-button">Call Records</button></li>
-                    <li><button class="nav-button">TAG Comments</button></li>
-                    <li><button class="nav-button">Statements</button></li>
-                    <li><button class="nav-button">Auto Reload</button></li>
-                    <li><button class="nav-button">Alerts</button></li>
+                    <li><button class="nav-button active" data-nav="as">Account Summary</button></li>
+                    <li><button class="nav-button" data-nav="t">Transactions</button></li>
+                    <li><button class="nav-button" data-nav="r">Refund</button></li>
+                    <li><button class="nav-button" data-nav="ts">Transaction Summary</button></li>
+                    <li><button class="nav-button" data-nav="cc">CC Auths</button></li>
+                    <li><button class="nav-button" data-nav="cr">Call Records</button></li>
+                    <li><button class="nav-button" data-nav="tc">TAG Comments</button></li>
+                    <li><button class="nav-button" data-nav="s">Statements</button></li>
+                    <li><button class="nav-button" data-nav="ar">Auto Reload</button></li>
+                    <li><button class="nav-button" data-nav="a">Alerts</button></li>
                 </ul>
+                <div data-nav="as" class="active">account summary</div>
+                <div data-nav="t">transactions</div>
+                <div data-nav="r">refund</div>
+                <div data-nav="ts">transaction summary</div>
+                <div data-nav="cc">cc auths</div>
+                <div data-nav="cr">call records</div>
+                <div data-nav="tc">tag comments</div>
+                <div data-nav="s">statements</div>
+                <div data-nav="ar">auto reload</div>
+                <div data-nav="a">alerts</div>
                 <div id="container-generated"></div>
             </main>
         </section>
