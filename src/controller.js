@@ -397,6 +397,21 @@ const data = {
             return rCc;
         }
     },
+    returnCallAttempts(destination) {
+        const calls = this.all.transactions.filter(transaction => transaction[searchType] === searchValue);
+
+        const result = [];
+
+        calls.forEach((call) => {
+            result.unshift(
+                {
+                    date: call.date,
+                    sub: call.sub,
+
+                }
+            )
+        });
+    },
     refundTransaction(refundObj, transaction) {
         transaction.refundable = false;
         const refunded = this.addDeposit(refundObj);
@@ -425,11 +440,12 @@ const data = {
 
         return { remove, add };
     }, 
-    createCall(destination, duration=this.getRandomInt(16), tax=0, facilityIndex=this.all.facilities[this.getRandomInt(this.all.facilities.length-1)]) {
-        const fac = facilityIndex;
+    createCall(destination, duration=this.getRandomInt(16), tax=0, facilityIndex=this.getRandomInt(this.all.facilities.length-1)) {
+        const fac = this.all.facilities[facilityIndex];
+        const rate = parseFloat(fac.Rate);
         const seconds = duration === 15 ? 0 : this.getRandomInt(60);
         const billDur = seconds > 30 ? duration + 1 : duration;
-        const bill = fac.rate * billDur;
+        const bill = rate * billDur;
         const sCode = duration > 0 ? "D0" : "D5";
 
         let tempEndCode = false;
@@ -440,17 +456,17 @@ const data = {
         const eCode = tempEndCode ? tempEndCode : "";
 
         const call = {
-            "Sub ID": fac['Sub ID'],
-            Orig: fac.Orig,
-            PIN: fac.PIN,
+            sub: fac['Sub ID'],
+            orig: fac.Orig,
+            pin: fac.Inmate.PIN,
             duration: `${duration}m ${seconds}s`,
-            "Bill Amt": bill,
-            Tax: tax,
-            "Total Amt": bill + tax,
-            "Start Code": sCode,
-            "End Code": eCode,
-            "Call Type": "H",
-            "Rate Type": this.getRandomInt(6) + 1
+            bill: bill.toFixed(2),
+            tax: tax.toFixed(2),
+            total: bill.toFixed(2),
+            sCode: sCode,
+            eCode: eCode,
+            type: "H",
+            rate: this.getRandomInt(6) + 1
         }
 
         const callTransaction = {destination, type: "CallUsage", amount: call["Total Amt"]};

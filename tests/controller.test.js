@@ -113,7 +113,7 @@ test('data.createCall will generate info needed for call records', ()=> {
     const call = data.createCall('8004838314');
     const callObj = call.call;
     expect(callObj).toEqual(
-        expect.objectContaining({"Call Type": "H"}),
+        expect.objectContaining({"type": "H"}),
     );
 });
 
@@ -137,15 +137,4 @@ test('data.returnCcAuths can search transactions by cc number', ()=> {
     const result = data.returnCcAuths('472776********3464', 'cc');
     expect(result[0][3]).toEqual("472776********3464");
 });
-
-
-
-
-// show transaction summary
-
-// show cc auths (destination)
-
-// show cc auths (first 6/last 4)
-
-// call records
 
